@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { v4 as uuid } from "uuid";
 import { addTask } from "../features/tasks/taskSlice";
 
 const TaskForm = () => {
@@ -7,7 +8,7 @@ const TaskForm = () => {
     title: "",
     description: "",
   });
-  
+
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -16,9 +17,13 @@ const TaskForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addTask(task))
+    dispatch(
+      addTask({
+        ...task,
+        id: uuid(), // le agrego un id para poder identificar
+      })
+    );
   };
-
 
   return (
     <>
